@@ -4,7 +4,8 @@ import _ from "lodash";
 import fs from "fs";
 import {performance} from "perf_hooks";
 
-const CHUNK_SIZE = 1;
+const args = process.argv.slice(2);
+const CHUNK_SIZE = parseInt(args.find(arg => arg.startsWith("--chunk-size="))?.split("=")[1], 10) || 1;
 
 const proceedString = async (string) => {
 

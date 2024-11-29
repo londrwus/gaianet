@@ -5,7 +5,7 @@ Takes phrases from file and posts the one by one to node. Infinite loop.
 
 ```bash
 ./start.sh #bash
-node bot_gaia.js # JavaScript
+node bot_gaia.js --chunk-size=2 # JavaScript
 ```
 
 Ships "as is", no further assistance will be provided.
