@@ -4,13 +4,12 @@ import _ from "lodash";
 import fs from "fs";
 import {performance} from "perf_hooks";
 
-
-const CHUNK_SIZE = 5;
+const CHUNK_SIZE = 1;
 
 const proceedString = async (string) => {
 
   const resultString = `${string[0]}${string[1]}${string[2]}`;
-  const charsCount = [1, 3];
+  const charsCount = [3, 1];
 
   const deepProceedString = (chars) => {
     return string
@@ -21,7 +20,7 @@ const proceedString = async (string) => {
         .replace(/ {2,}/g, " ");
   }
 
-  return deepProceedString((resultString === '": ') ? charsCount[1] : charsCount[0]);
+  return deepProceedString((resultString === '": ') ? charsCount[0] : charsCount[1]);
 }
 
 async function postToNode(phrase) {
@@ -52,9 +51,9 @@ async function postToNode(phrase) {
   let roundCounter = 0;
 
   while (true) {
-    let chunks = _.chunk(_.shuffle(phrasesArray), CHUNK_SIZE);
+    const chunks = _.chunk(_.shuffle(phrasesArray), CHUNK_SIZE);
     for (const chunk of chunks) {
-      let chunkStarted = performance.now();
+      const chunkStarted = performance.now();
       let promises = [];
       roundCounter++;
 
@@ -65,12 +64,12 @@ async function postToNode(phrase) {
       }
 
       console.info(`>> Round: ${roundCounter} | Requests sent: ${chunk.length}.`);
-      let results = await Promise.all(promises).catch((err) => {
+      const results = await Promise.all(promises).catch((err) => {
         console.error(`<< Round: ${roundCounter} |`, err);
       });
 
-      let chunkFinished = performance.now();
-      let elapsed_time = chunkFinished - chunkStarted;
+      const chunkFinished = performance.now();
+      const elapsed_time = chunkFinished - chunkStarted;
       console.info(`<< Round: ${roundCounter} | Responses received::  ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds`);
 
       console.log('_____________________________________________________\n');
@@ -78,4 +77,5 @@ async function postToNode(phrase) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
+
 })();
