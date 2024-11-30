@@ -64,25 +64,22 @@ async function postToNode(phrase) {
         promises.push(
             postToNode(phrase)
                 .then(result => {
-                  console.info(`[ ${chalk.bold.green('SUCCESS')} ] : ${chalk.white(phrase)} :: ${chalk.white(result)}`);
+                  console.info(`[ ${chalk.bold.green('SUCCESS')} ] : ${chalk.white(phrase.slice(0, 50))}... ${chalk.bgGrey.white(`->`)} ${chalk.white(result.slice(0, 50))}...`);
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ ${chalk.bold.red('FAIL')} ] : ${chalk.white(phrase)} :: ${chalk.bgRed.whiteBright(error)}`, ``);
-                  // console.error(`[ FAIL ] : "${phrase}" :: ${error}`);
+                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 50))}... ${chalk.bgGrey.white(`->`)} ${chalk.bgRed.whiteBright(error)}`, ``);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
       }
 
-      console.info(`>> Round: ${roundCounter} | Requests sent: ${chunk.length}.`);
+      console.info(`${chalk.bgBlueBright(`${chalk.bold.whiteBright(`>>`)} Round: ${roundCounter} | Requests sent: ${chunk.length}`)}`);
       const results = await Promise.all(promises); // Wait for all promises to resolve
 
       const chunkFinished = performance.now();
       const elapsed_time = chunkFinished - chunkStarted;
-      console.info(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds`);
-
-      console.log('==============================================================================================================\n');
+      console.info(`${chalk.bgBlueBright(`${chalk.bold.whiteBright(`<<`)} Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds\n`)}`);
 
       await new Promise(resolve => setTimeout(resolve, 1000)); // Pause before the next chunk
     }
