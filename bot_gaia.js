@@ -97,11 +97,11 @@ async function postToNode(phrase) {
         promises.push(
             postToNode(phrase)
                 .then(result => {
-                  console.info(`SUCCESS : "${phrase}"`);
+                  console.info(` SUCCESS : "${phrase}"`);
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`FAIL : "${phrase}": ${error}`);
+                  console.error(` FAIL : "${phrase}": ${error}`);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
