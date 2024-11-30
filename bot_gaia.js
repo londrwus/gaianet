@@ -3,6 +3,7 @@ import axios from "axios";
 import _ from "lodash";
 import fs from "fs";
 import {performance} from "perf_hooks";
+import chalk from "chalk";
 
 const args = process.argv.slice(2);
 const CHUNK_SIZE = parseInt(args.find(arg => arg.startsWith("--chunk-size="))?.split("=")[1], 10) || 1;
@@ -47,40 +48,6 @@ async function postToNode(phrase) {
   })
 }
 
-// (async () => {
-//   const phrasesArray = fs.readFileSync(config.pathToFile).toString().split('\n').filter(line => line.trim() !== '');
-//   let roundCounter = 0;
-//
-//   while (true) {
-//     const chunks = _.chunk(_.shuffle(phrasesArray), CHUNK_SIZE);
-//     for (const chunk of chunks) {
-//       const chunkStarted = performance.now();
-//       let promises = [];
-//       roundCounter++;
-//
-//       for (const phrase of chunk) {
-//         promises.push(
-//             postToNode(phrase)
-//         )
-//       }
-//
-//       console.info(`>> Round: ${roundCounter} | Requests sent: ${chunk.length}.`);
-//       const results = await Promise.all(promises).catch((err) => {
-//         console.error(`<< Round: ${roundCounter} | ${err}`);
-//       });
-//
-//       const chunkFinished = performance.now();
-//       const elapsed_time = chunkFinished - chunkStarted;
-//       console.info(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds`);
-//
-//       console.log('_____________________________________________________\n');
-//
-//       await new Promise(resolve => setTimeout(resolve, 1000));
-//     }
-//   }
-//
-// })();
-
 (async () => {
   const phrasesArray = fs.readFileSync(config.pathToFile).toString().split('\n').filter(line => line.trim() !== '');
   let roundCounter = 0;
@@ -97,11 +64,12 @@ async function postToNode(phrase) {
         promises.push(
             postToNode(phrase)
                 .then(result => {
-                  console.info(`[ SUCCESS ] : "${phrase} :: ${result}"`);
+                  console.info(`[ ${chalk.bold.green('SUCCESS')} ] : ${chalk.white(phrase)} :: ${chalk.white(result)}`);
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ FAIL ] : "${phrase}" :: ${error}`);
+                  console.error(`[ ${chalk.bold.red('FAIL')} ] : ${chalk.white(phrase)} :: ${chalk.bgRed.whiteBright(error)}`, ``);
+                  // console.error(`[ FAIL ] : "${phrase}" :: ${error}`);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
@@ -109,15 +77,6 @@ async function postToNode(phrase) {
 
       console.info(`>> Round: ${roundCounter} | Requests sent: ${chunk.length}.`);
       const results = await Promise.all(promises); // Wait for all promises to resolve
-
-      // Optionally process results after Promise.all
-      // results.forEach((result, index) => {
-      //   if (result === null) {
-      //     console.info(`Failed to process phrase: "${chunk[index]}"`);
-      //   } else {
-      //     console.info(`Result for phrase: "${chunk[index]}": ${result}`);
-      //   }
-      // });
 
       const chunkFinished = performance.now();
       const elapsed_time = chunkFinished - chunkStarted;
