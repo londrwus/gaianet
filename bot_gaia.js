@@ -68,7 +68,7 @@ async function postToNode(phrase) {
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 32))}... ${chalk.bgRed.whiteBright(`->`)} ${chalk.bgRed.whiteBright(error)}`, ``);
+                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 32))}... ${chalk.bgRed.whiteBright(`->`)} ${chalk.redBright(error)}`, ``);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
@@ -79,7 +79,8 @@ async function postToNode(phrase) {
 
       const chunkFinished = performance.now();
       const elapsed_time = chunkFinished - chunkStarted;
-      console.info(`${chalk.bgGrey.whiteBright(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds\n`)}`);
+      let elapsed_value = elapsed_time / 1000;
+      console.info(`${chalk.bgGrey.whiteBright(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${parseFloat(`${elapsed_value.toFixed(2)}`)} seconds\n`)}`);
 
       await new Promise(resolve => setTimeout(resolve, 1000)); // Pause before the next chunk
     }
