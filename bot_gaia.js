@@ -101,7 +101,7 @@ async function postToNode(phrase) {
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ FAIL ] : "${phrase}" : ${error}`);
+                  console.error(`[ FAIL ] : "${phrase}" :: ${error}`);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
