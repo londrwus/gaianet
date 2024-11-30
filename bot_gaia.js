@@ -97,11 +97,11 @@ async function postToNode(phrase) {
         promises.push(
             postToNode(phrase)
                 .then(result => {
-                  console.info(` SUCCESS : "${phrase}"`);
+                  console.info(`[ SUCCESS ] : "${phrase} :: ${result}"`);
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(` FAIL : "${phrase}": ${error}`);
+                  console.error(`[ FAIL ] : "${phrase}" : ${error}`);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
@@ -123,7 +123,7 @@ async function postToNode(phrase) {
       const elapsed_time = chunkFinished - chunkStarted;
       console.info(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${elapsed_time / 1000} seconds`);
 
-      console.log('_____________________________________________________\n');
+      console.log('==============================================================================================================\n');
 
       await new Promise(resolve => setTimeout(resolve, 1000)); // Pause before the next chunk
     }
