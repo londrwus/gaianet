@@ -64,11 +64,11 @@ async function postToNode(phrase) {
         promises.push(
             postToNode(phrase)
                 .then(result => {
-                  console.info(`[ ${chalk.bold.green('SUCCESS')} ] : ${chalk.white(phrase.slice(0, 35))}... ${chalk.bgGrey.white(`->`)} ${chalk.white(result.slice(0, 35))}...`);
+                  console.info(`[ ${chalk.bold.green('SUCCESS')} ] : ${chalk.white(phrase.slice(0, 30))}... ${chalk.bgGrey.white(`->`)} ${chalk.white(result.slice(0, 30))}...`);
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 35))}... ${chalk.bgGrey.white(`->`)} ${chalk.bgRed.whiteBright(error)}`, ``);
+                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 30))}... ${chalk.bgGrey.white(`->`)} ${chalk.bgRed.whiteBright(error)}`, ``);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
