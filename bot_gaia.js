@@ -68,7 +68,7 @@ async function postToNode(phrase) {
                   return result; // Return the result for further processing if needed
                 })
                 .catch(error => {
-                  console.error(`[ ${chalk.bold.red('FAIL')} ] | ${chalk.white(phrase.slice(0, 32))}... ${chalk.bgRed.whiteBright(`->`)} ${chalk.redBright(error)}`, ``);
+                  console.error(`[ ${chalk.bold.red('FAIL')} ]    | ${chalk.white(phrase.slice(0, 30))}... ${chalk.bgRed.whiteBright(`->`)} ${chalk.redBright(error)}`, ``);
                   return null; // Return null to ensure Promise.all does not fail
                 })
         );
