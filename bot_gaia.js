@@ -1,3 +1,4 @@
+'use strict';
 import config from "./config.json" with {type: "json"};
 import axios from "axios";
 import _ from "lodash";
@@ -82,7 +83,7 @@ async function postToNode(phrase) {
       let elapsed_value = elapsed_time / 1000;
       console.info(`${chalk.bgGrey.whiteBright(`<< Round: ${roundCounter} | Responses received :: ${chunk.length}. Execution time: ${parseFloat(`${elapsed_value.toFixed(2)}`)} seconds\n`)}`);
 
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Pause before the next chunk
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Pause before the next chunk
     }
   }
 })()
