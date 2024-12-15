@@ -5,6 +5,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "blessed": "^0.1.81",
     "chalk": "^5.3.0"
   }
 }
