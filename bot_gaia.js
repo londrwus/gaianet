@@ -61,7 +61,7 @@ const proceedString = async (string) => {
 
 async function postToNode(phrase) {
   return new Promise((nodeTaskCompleted, reject) => {
-    const url = 'https://0x0aa110d2e3a2f14fc122c849cea06d1bc9ed1c62.us.gaianet.network/v1/chat/completions';
+    const url = 'https://0x0aa110d2e3a2f14fc122c849cea06d1bc9ed1c62.gaia.domains/v1/chat/completions';
     const headers = {
       'accept': 'application/json',
       'accept-language': 'ru-UA,ru;q=0.9,en-US;q=0.8,en;q=0.7',
